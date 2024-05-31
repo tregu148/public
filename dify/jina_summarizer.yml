@@ -1,0 +1,184 @@
+app:
+  description: ''
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: jina_summarizer
+workflow:
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: http-request
+      id: 1716977305175-source-1717127437749-target
+      source: '1716977305175'
+      sourceHandle: source
+      target: '1717127437749'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: llm
+      id: 1717127437749-source-1717127709809-target
+      source: '1717127437749'
+      sourceHandle: source
+      target: '1717127709809'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1717127709809-source-1717127789005-target
+      source: '1717127709809'
+      sourceHandle: source
+      target: '1717127789005'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: "\u958B\u59CB"
+        type: start
+        variables:
+        - label: url
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: url
+      height: 88
+      id: '1716977305175'
+      position:
+        x: 78
+        y: 282
+      positionAbsolute:
+        x: 78
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: ''
+          type: none
+        desc: ''
+        headers: ''
+        method: get
+        params: ''
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: "HTTP\u30EA\u30AF\u30A8\u30B9\u30C8"
+        type: http-request
+        url: https://r.jina.ai/{{#1716977305175.url#}}
+        variables: []
+      height: 91
+      id: '1717127437749'
+      position:
+        x: 382
+        y: 282
+      positionAbsolute:
+        x: 382
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-1.5-pro-latest
+          provider: google
+        prompt_template:
+        - role: system
+          text: "\u3042\u306A\u305F\u306E\u30BF\u30B9\u30AF\u306F\u3001\u4EE5\u4E0B\
+            \u3092\u8981\u7D04\u3059\u308B\u3053\u3068\n{{#1717127437749.body#}}"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 96
+      id: '1717127709809'
+      position:
+        x: 684
+        y: 282
+      positionAbsolute:
+        x: 684
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1717127709809'
+          - text
+          variable: text
+        selected: false
+        title: "\u7D42\u4E86"
+        type: end
+      height: 88
+      id: '1717127789005'
+      position:
+        x: 986
+        y: 282
+      positionAbsolute:
+        x: 986
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 56.78222907679947
+      y: 134.7443601436646
+      zoom: 1.1081461345286363
