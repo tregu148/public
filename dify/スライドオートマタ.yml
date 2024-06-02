@@ -1,0 +1,135 @@
+app:
+  description: ''
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: completion
+  name: "\u30B9\u30E9\u30A4\u30C9\u30AA\u30FC\u30C8\u30DE\u30BF"
+model_config:
+  agent_mode:
+    enabled: false
+    max_iteration: 5
+    strategy: function_call
+    tools: []
+  annotation_reply:
+    enabled: false
+  chat_prompt_config: {}
+  completion_prompt_config: {}
+  dataset_configs:
+    datasets:
+      datasets: []
+    retrieval_model: single
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    image:
+      detail: high
+      enabled: true
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+  model:
+    completion_params:
+      stop: []
+    mode: chat
+    name: gemini-1.5-pro-latest
+    provider: google
+  more_like_this:
+    enabled: false
+  opening_statement: null
+  pre_prompt: 'Your task is to create a presentation on the following topic:
+
+    <topic>
+
+    {{TOPIC}}
+
+    </topic>
+
+
+    <LANGUAGE>
+
+    {{LANGUAGE}}
+
+    </LANGUAGE>
+
+    The presentation is intended for this audience:
+
+    <audience>
+
+    {{AUDIENCE}}
+
+    </audience>
+
+    The main purpose of the presentation is:
+
+    <purpose>
+
+    {{PURPOSE}}
+
+    </purpose>
+
+    When creating the presentation, keep the following guidelines in mind:
+
+    - Organize the content in a logical flow with a clear introduction, main points,
+    and conclusion
+
+    - Use concise language and avoid jargon or overly technical terms
+
+    - Include relevant examples, data, or anecdotes to support your points
+
+    - Design visually appealing slides with appropriate images, charts, or graphics
+
+    - Tailor the content and tone to the specific audience and purpose
+
+    First, think through the overall structure and key points you want to cover in
+    the presentation. Outline your thoughts in a <scratchpad>.
+
+    Next, generate the content for each slide in the presentation. For each slide,
+    include a <title> and the main <content>. Use persuasive language and engaging
+    visuals to make your points effectively.
+
+    Remember to keep the audience and purpose in mind throughout the presentation.
+    Use clear language and compelling arguments to achieve your intended goal.
+
+    When you have finished generating all the slides, output the final presentation
+    with each slide enclosed in <slide> tags.'
+  prompt_type: simple
+  retriever_resource:
+    enabled: false
+  sensitive_word_avoidance:
+    configs: []
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form:
+  - paragraph:
+      default: ''
+      label: "\u30D7\u30EC\u30BC\u30F3\u5185\u5BB9"
+      required: true
+      variable: TOPIC
+  - select:
+      default: ''
+      label: "\u8A00\u8A9E"
+      options:
+      - "\u65E5\u672C\u8A9E"
+      - English
+      required: true
+      variable: LANGUAGE
+  - text-input:
+      default: ''
+      label: "\u8AB0\u5411\u3051\u306E\uFF1F"
+      required: true
+      variable: AUDIENCE
+  - text-input:
+      default: ''
+      label: "\u306A\u3093\u306E\u305F\u3081\u306E\uFF1F"
+      required: true
+      variable: PURPOSE
