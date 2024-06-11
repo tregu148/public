@@ -1,0 +1,288 @@
+app:
+  description: "RSS\u30D5\u30A3\u30FC\u30C9\u304B\u3089<link>\u30BF\u30B0\u3092\u62BD\
+    \u51FA\u3057\u3001\u5404URL\u3092\u53D6\u5F97\u3001\u5404\u30DA\u30FC\u30B8\u3092\
+    \u4E00\u3064\u306E\u6587\u5B57\u5217\u306B\u3057\u3066\u51FA\u529B\u3059\u308B\
+    \u3002\u3000\u51FA\u529B\u7D50\u679C\u306FArray\u5F62\u5F0F\uFF08\u306E\u6587\u5B57\
+    \u5217\uFF09\u306B\u306A\u3063\u3066\u3044\u308B\u306E\u3067\u3001Json.load\u3059\
+    \u308B\u3068Json\u306B\u306A\u308B\u306F\u305A\u3002"
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: rss_crawler
+workflow:
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: http-request
+      id: 1718076250420-source-1718076269129-target
+      source: '1718076250420'
+      sourceHandle: source
+      target: '1718076269129'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: code
+      id: 1718076269129-source-1718076282375-target
+      source: '1718076269129'
+      sourceHandle: source
+      target: '1718076282375'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: iteration
+      id: 1718076282375-source-1718076662371-target
+      source: '1718076282375'
+      sourceHandle: source
+      target: '1718076662371'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: end
+      id: 1718076662371-source-1718076726206-target
+      source: '1718076662371'
+      sourceHandle: source
+      target: '1718076726206'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: "\u958B\u59CB"
+        type: start
+        variables:
+        - label: url
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: url_rss
+      height: 90
+      id: '1718076250420'
+      position:
+        x: 30
+        y: 323
+      positionAbsolute:
+        x: 30
+        y: 323
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: ''
+          type: none
+        desc: ''
+        headers: ''
+        method: get
+        params: ''
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: "HTTP\u30EA\u30AF\u30A8\u30B9\u30C8"
+        type: http-request
+        url: '{{#1718076250420.url_rss#}}'
+        variables: []
+      height: 92
+      id: '1718076269129'
+      position:
+        x: 334
+        y: 323
+      positionAbsolute:
+        x: 334
+        y: 323
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(content: str) -> dict:\n    import re\n\n    url_pattern =\
+          \ r'<link>(.*?)</link>'\n    urls = re.findall(url_pattern, content)\n\n\
+          \    description_pattern = r'<description>(.*?)</description>'\n    description_match\
+          \ = re.search(description_pattern, content)\n    description = description_match.group(1)\
+          \ if description_match else \"\"\n\n    generator_pattern = r'<generator>(.*?)</generator>'\n\
+          \    generator_match = re.search(generator_pattern, content)\n    generator\
+          \ = generator_match.group(1) if generator_match else \"\"\n\n    return\
+          \ {\n        \"result\": urls,\n        \"description\": description,\n\
+          \        \"generator\": generator\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          description:
+            children: null
+            type: string
+          generator:
+            children: null
+            type: string
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: "\u30B3\u30FC\u30C9"
+        type: code
+        variables:
+        - value_selector:
+          - '1718076269129'
+          - body
+          variable: content
+      height: 54
+      id: '1718076282375'
+      position:
+        x: 638
+        y: 323
+      positionAbsolute:
+        x: 638
+        y: 323
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        height: 246
+        iterator_selector:
+        - '1718076282375'
+        - result
+        output_selector:
+        - '1718076681966'
+        - text
+        output_type: array[string]
+        selected: false
+        startNodeType: tool
+        start_node_id: '1718076681966'
+        title: "\u30A4\u30C6\u30EC\u30FC\u30B7\u30E7\u30F3"
+        type: iteration
+        width: 377
+      height: 246
+      id: '1718076662371'
+      position:
+        x: 942
+        y: 323
+      positionAbsolute:
+        x: 942
+        y: 323
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 377
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        isIterationStart: true
+        iteration_id: '1718076662371'
+        provider_id: jina
+        provider_name: jina
+        provider_type: builtin
+        selected: false
+        title: JinaReader
+        tool_configurations:
+          summary: 0
+          target_selector: null
+          wait_for_selector: null
+        tool_label: JinaReader
+        tool_name: jina_reader
+        tool_parameters:
+          url:
+            type: mixed
+            value: '{{#1718076662371.item#}}'
+        type: tool
+      extent: parent
+      height: 142
+      id: '1718076681966'
+      parentId: '1718076662371'
+      position:
+        x: 117
+        y: 85
+      positionAbsolute:
+        x: 1059
+        y: 408
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1001
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1718076662371'
+          - output
+          variable: contents
+        - value_selector:
+          - '1718076282375'
+          - description
+          variable: description
+        - value_selector:
+          - '1718076282375'
+          - generator
+          variable: generator
+        - value_selector:
+          - '1718136039215'
+          - text
+          variable: insight
+        selected: false
+        title: "\u7D42\u4E86"
+        type: end
+      height: 168
+      id: '1718076726206'
+      position:
+        x: 1379
+        y: 323
+      positionAbsolute:
+        x: 1379
+        y: 323
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 215
+      y: 203.9999999999999
+      zoom: 0.7
