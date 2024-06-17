@@ -86,7 +86,7 @@ workflow:
     nodes:
     - data:
         desc: ''
-        selected: true
+        selected: false
         title: "\u958B\u59CB"
         type: start
         variables:
@@ -140,7 +140,7 @@ workflow:
       positionAbsolute:
         x: 31.90968314049445
         y: 258
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -223,11 +223,15 @@ workflow:
         - value_selector:
           - '1718573161506'
           - text
-          variable: text
-        selected: false
+          variable: llm
+        - value_selector:
+          - '1718575220323'
+          - json_string
+          variable: result
+        selected: true
         title: "\u7D42\u4E86"
         type: end
-      height: 90
+      height: 116
       id: '1718532441279'
       position:
         x: 2043.2584418805568
@@ -235,7 +239,7 @@ workflow:
       positionAbsolute:
         x: 2043.2584418805568
         y: 268.4496267130073
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -430,6 +434,6 @@ workflow:
       type: custom
       width: 244
     viewport:
-      x: 114.870738982896
-      y: 554.775180841849
+      x: 308.870738982896
+      y: 485.77518084184896
       zoom: 0.5000000185090264
