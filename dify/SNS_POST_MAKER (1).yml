@@ -1,0 +1,435 @@
+app:
+  description: ''
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: SNS_POST_MAKER
+workflow:
+  features:
+    file_upload:
+      image:
+        enabled: true
+        number_limits: 3
+        transfer_methods:
+        - local_file
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: llm
+      id: 1718531620397-source-1718573161506-target
+      source: '1718531620397'
+      sourceHandle: source
+      target: '1718573161506'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: 1718573161506-source-1718575220323-target
+      source: '1718573161506'
+      sourceHandle: source
+      target: '1718575220323'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: code
+      id: 1718575220323-source-1718575305872-target
+      source: '1718575220323'
+      sourceHandle: source
+      target: '1718575305872'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: end
+      id: 1718575305872-source-1718532441279-target
+      source: '1718575305872'
+      sourceHandle: source
+      target: '1718532441279'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: code
+      id: 1718531598016-source-1718531620397-target
+      source: '1718531598016'
+      sourceHandle: source
+      target: '1718531620397'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: true
+        title: "\u958B\u59CB"
+        type: start
+        variables:
+        - label: datebase_id_knowledge
+          max_length: 256
+          options: []
+          required: false
+          type: text-input
+          variable: datebase_id_knowledge
+        - label: goal
+          max_length: 256
+          options: []
+          required: false
+          type: text-input
+          variable: goal
+        - label: input_example
+          max_length: null
+          options: []
+          required: false
+          type: paragraph
+          variable: input_example
+        - label: num_outputs
+          max_length: 48
+          options: []
+          required: false
+          type: number
+          variable: num_outputs
+        - label: topic
+          max_length: 256
+          options: []
+          required: false
+          type: text-input
+          variable: topic
+        - label: database_id_of_posts
+          max_length: 256
+          options: []
+          required: false
+          type: text-input
+          variable: database_id_of_posts
+        - label: notion_api_key
+          max_length: 256
+          options: []
+          required: false
+          type: text-input
+          variable: notion_api_key
+      height: 246
+      id: '1718531598016'
+      position:
+        x: 31.90968314049445
+        y: 258
+      positionAbsolute:
+        x: 31.90968314049445
+        y: 258
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(database_id:str,api_key:str) -> dict:\n    import requests\n\
+          \    import json\n    import re\n\n\n    # url = \"\"\n\n    # \u6B63\u898F\
+          \u8868\u73FE\u30D1\u30BF\u30FC\u30F3\u306B\u30DE\u30C3\u30C1\u3059\u308B\
+          \u6587\u5B57\u5217\u3092\u53D6\u5F97\n    # match = re.search(r\"notion.so/([a-zA-Z0-9]{32})\"\
+          , url)\n\n    # database_id = \"\"\n    # if not match:\n    #     print(\"\
+          Database ID not found.\")\n    # else:\n    #     database_id = match.group(1)\n\
+          \    #     print(\"Database ID:\", database_id)\n\n\n    # Set the API endpoint\
+          \ URL\n    url = f\"https://api.notion.com/v1/databases/{database_id}/query\"\
+          \n\n    # Set the request headers\n    headers = {\n        \"Authorization\"\
+          : f\"Bearer {api_key}\",\n        \"Notion-Version\": \"2021-08-16\",\n\
+          \        \"Content-Type\": \"application/json\"\n    }\n\n    # Make the\
+          \ API request\n    response = requests.post(url, headers=headers)\n\n  \
+          \  # Check if the request was successful\n    if response.status_code ==\
+          \ 200:\n        # Parse the JSON response\n        data = response.json()\n\
+          \        \n        # Extract the page IDs from the response\n        page_ids\
+          \ = [page[\"id\"] for page in data[\"results\"]]\n        \n        knowledge\
+          \ = \"\"\n        for page_id in page_ids:\n            # Notion API \u30A8\
+          \u30F3\u30C9\u30DD\u30A4\u30F3\u30C8\n            url = f\"https://api.notion.com/v1/blocks/{page_id}/children\"\
+          \n\n            # API\u30AD\u30FC\u3092\u8A2D\u5B9A\n            headers\
+          \ = {\n                \"Authorization\": f\"Bearer {api_key}\",\n     \
+          \           \"Notion-Version\": \"2022-06-28\"  # API\u306E\u30D0\u30FC\u30B8\
+          \u30E7\u30F3\u3092\u6307\u5B9A\n            }\n\n            # API\u306B\
+          \u30EA\u30AF\u30A8\u30B9\u30C8\u3092\u9001\u4FE1\n            response =\
+          \ requests.get(url=url, headers=headers)\n\n            # \u30EC\u30B9\u30DD\
+          \u30F3\u30B9\u3092JSON\u306B\u5909\u63DB\n            data = response.json()\n\
+          \            \n            for block in data[\"results\"]:\n           \
+          \     if block[\"type\"] == \"file\":\n                    file_url = block[\"\
+          file\"][\"file\"][\"url\"]\n                    file_response = requests.get(file_url)\n\
+          \                    file_response.encoding = 'utf-8'\n                \
+          \    file_content = file_response.text\n                    knowledge +=\
+          \ str(file_content)\n                else:\n                    knowledge\
+          \ += str(block)\n\n        # Print the array of page IDs\n        # result\
+          \ = {\n        #     'result':str(knowledge)\n        # }\n        # print(result)\n\
+          \        # print(len(str(result)))\n        return {\n            'result':str(knowledge)\n\
+          \        }\n    else:\n        print(f\"Error: {response.status_code}\"\
+          )\n        print(response.text)\n        return {\n            'result':str([response.text,\"\
+          iii\"])\n        }\n        # # print(result)\n        # return result"
+        code_language: python3
+        dependencies:
+        - name: requests
+          version: ''
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: "\u30B3\u30FC\u30C9"
+        type: code
+        variables:
+        - value_selector:
+          - '1718531598016'
+          - datebase_id_knowledge
+          variable: database_id
+        - value_selector:
+          - '1718531598016'
+          - notion_api_key
+          variable: api_key
+      height: 54
+      id: '1718531620397'
+      position:
+        x: 509.94829414059836
+        y: 258
+      positionAbsolute:
+        x: 509.94829414059836
+        y: 258
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1718573161506'
+          - text
+          variable: text
+        selected: false
+        title: "\u7D42\u4E86"
+        type: end
+      height: 90
+      id: '1718532441279'
+      position:
+        x: 2043.2584418805568
+        y: 268.4496267130073
+      positionAbsolute:
+        x: 2043.2584418805568
+        y: 268.4496267130073
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.5
+          mode: chat
+          name: gemini-1.5-flash-latest
+          provider: google
+        prompt_template:
+        - id: 9827fec4-28f0-4e0c-898a-8507245d1b67
+          role: system
+          text: ''
+        - id: e9f15da2-a448-4405-9382-11af0603e76c
+          role: user
+          text: "Here is an example input:\n\n<input_example>\n{{#1718531598016.input_example#}}\n\
+            </input_example>\n\u3082\u3057\u3001\u4F8B\u304C\u63D0\u4F9B\u3057\u3066\
+            \u3044\u306A\u3044\u3068\u304D\u3001\u3042\u306A\u305F\u304C\u9069\u5F53\
+            \u306B\u751F\u6210\u3057\u3066\u826F\u3044\n\nYour task is to generate\
+            \ {{#1718531598016.num_outputs#}} outputs that follow the same format\
+            \ and structure as the example above.\n\n\nYou have  the following knowledge:\n\
+            \nIf files are provide, user post about the files:\nDoes user provide\
+            \ Image?\nWhat is this image?\n\n<knowledge>\nIF <topic>  is provided,\
+            \ User want to menstion about :\n<topic>{{#1718531598016.topic#}} </topic>\n\
+            \n\n\n\n{{#1718531620397.result#}}\n\n</knowledge>\n\nThe goal is for\
+            \ each output to:\n\n<GOAL>\n{{#1718531598016.goal#}}\n</GOAL>\nFirst,\
+            \ put below in <scrachpad> tag\n- <GOAL>\u306E\u30D9\u30B9\u30C8\u30D7\
+            \u30E9\u30AF\u30C6\u30A3\u30B9\u306F\uFF1F\n- Match the style, tone, and\
+            \ structure of the input example as closely as possible\n- Weave in the\
+            \ key points from the provided knowledge \n- Communicate a distinct message\
+            \ or story from the other generated outputs\n- <knowledge>\u306B\u6E96\
+            \u62E0\u3001\u985E\u63A8\u3059\u308B\u5185\u5BB9\u306B\u306A\u3063\u3066\
+            \u308B\uFF1F\n- \u5185\u5BB9\u304C<input_example>\u305D\u306E\u307E\u307E\
+            \u306B\u306A\u3063\u3066\u3044\u306A\u3044\u304B\uFF1F\u305D\u3046\u306A\
+            \u3089\u3070\u6E1B\u70B9\u3067\u3042\u308A\u3001\u61F2\u7F70\u3067\u3059\
+            \n\nNext put below in <reflection>tag\nBefore generating the outputs,\
+            \ reflect on your approach inside <reflection> tags. Consider things like:\n\
+            - What are the key structural elements of the input example that need\
+            \ to be maintained?\n- How can the <knowledge> be naturally incorporated\
+            \ while preserving the example format?\n- \u30CA\u30EC\u30C3\u30B8\u306B\
+            \u306F\u4F55\u304C\u66F8\u304B\u308C\u3066\u3044\u308B\uFF1F\u771F\u610F\
+            \u306F\uFF1F\u672C\u8CEA\u306F\uFF1F\u3000\u91CD\u8981\u306A\u30DD\u30A4\
+            \u30F3\u30C8\u306F\u4F55\uFF1F\u4F55\u3092\u3064\u304C\u3048\u308B\u3079\
+            \u304D\uFF1F\u3000\u30A4\u30F3\u30B5\u30A4\u30C8\u306F\uFF1F\n- \u30AF\
+            \u30E9\u30A4\u30A2\u30F3\u30C8\u306E\u30CB\u30FC\u30BA\u3084\u8208\u5473\
+            \u3092\u5F15\u304F\u5E83\u544A\u30D5\u30A9\u30FC\u30DE\u30C3\u30C8\u3084\
+            \u30AF\u30EA\u30A8\u30A4\u30C6\u30A3\u30D6\u8981\u7D20\u306F\uFF1F\n-\
+            \ \u52B9\u7387\u7684\u306B\u30BF\u30FC\u30B2\u30C3\u30C8\u30AF\u30E9\u30A4\
+            \u30A2\u30F3\u30C8\u306B\u30EA\u30FC\u30C1\u3067\u304D\u308B\u914D\u4FE1\
+            \u8A2D\u5B9A\u3084\u6700\u9069\u5316\u65B9\u6CD5\u306F\uFF1F \n- \u30A4\
+            \u30F3\u30D7\u30EC\u30C3\u30B7\u30E7\u30F3\u884C\u52D5\u3092\u4FC3\u3059\
+            \u52B9\u679C\u7684\u306A\u30B3\u30FC\u30EB\u30C8\u30A5\u30A2\u30AF\u30B7\
+            \u30E7\u30F3\u306E\u8A2D\u8A08\u65B9\u6CD5\u306F\uFF1F\n- Is it match\
+            \ <GOAL>?\n\n\nThen, generate {{#1718531598016.num_outputs#}} outputs\
+            \ that satisfy the stated goals. For each one, think carefully about how\
+            \ to mirror the input example's format while telling a fresh story built\
+            \ around the given knowledge. Number each output sequentially and enclose\
+            \ it in <output_array> tags.\n\n\n\n\n\n\n\n\n\n\n\n\nyou should replace\
+            \ <output1>itself to \"\" .\n<output_array>\n[  \n    {'content':'<output1>'},\n\
+            \    {'content':'<output2>'},\n    {'content':'<output3>'},\n    ...\n\
+            ]\n<output_array>\n\n<language>\n\u65E5\u672C\u8A9E\n</language>"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 98
+      id: '1718573161506'
+      position:
+        x: 954.4310573265392
+        y: 248.43352752201594
+      positionAbsolute:
+        x: 954.4310573265392
+        y: 248.43352752201594
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(posts: str) -> dict:\n    import re\n    import json\n\n\
+          \    # Extract the content between <output_array> tags\n    json_string\
+          \ = re.search(r'<output_array>(.*?)</output_array>', posts, re.DOTALL).group(1).strip()\n\
+          \n    # Replace single quotes with double quotes for valid JSON\n    json_string\
+          \ = json_string.replace(\"'\", '\"')\n    \n    # Ensure the JSON string\
+          \ is properly formatted by fixing newlines\n    # Remove newline characters\
+          \ inside the objects\n    json_string = json_string.replace('\\n', ' ')\n\
+          \    \n    # Add commas between JSON objects\n    json_string = json_string.replace('}{',\
+          \ '},{')\n\n    # Parse the JSON string into a Python list\n    # json_array\
+          \ = json.loads(json_string)\n\n    # return json_array\n\n\n    return {\n\
+          \        \"json_string\": json_string,\n    }\n"
+        code_language: python3
+        dependencies:
+        - name: requests
+          version: ''
+        desc: ''
+        outputs:
+          json_string:
+            children: null
+            type: string
+        selected: false
+        title: "\u30B3\u30FC\u30C9 2"
+        type: code
+        variables:
+        - value_selector:
+          - '1718573161506'
+          - text
+          variable: posts
+      height: 54
+      id: '1718575220323'
+      position:
+        x: 1368.6505917804711
+        y: 274.7992309768444
+      positionAbsolute:
+        x: 1368.6505917804711
+        y: 274.7992309768444
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(json_string:str,database_id_of_posts:str,notion_api_key:str)\
+          \ -> dict:\n    import requests\n    import datetime\n    import json\n\n\
+          \    databasedf_id = database_id_of_posts\n\n\n    \n    posts = json.loads(json_string)\n\
+          \    url = 'https://api.notion.com/v1/pages'\n\n    headers = {\n      \
+          \  'Notion-Version': '2022-06-28',\n        'Authorization': 'Bearer ' +\
+          \ notion_api_key,\n        'Content-Type': 'application/json',\n    }\n\n\
+          \    for i, page_data in enumerate(posts, start=1):\n        title = f\"\
+          {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\"\n        content\
+          \ = page_data['content']\n\n        json_data = {\n            'parent':\
+          \ {\n                'database_id': databasedf_id\n            },\n    \
+          \        'properties': {\n                'Name': {\n                  \
+          \  'title': [\n                        {\n                            'text':\
+          \ {\n                                'content': title\n                \
+          \            }\n                        }\n                    ]\n     \
+          \           },\n                'Tags': {\n                    'multi_select':\
+          \ [\n                        {\n                            'name': 'Dify'\n\
+          \                        }\n                    ]\n                },\n\
+          \                'Content': {\n                    'rich_text': [\n    \
+          \                    {\n                            'text': {\n        \
+          \                        'content': content\n                          \
+          \  }\n                        }\n                    ]\n               \
+          \ },\n            }\n        }\n\n        response = requests.post(url,\
+          \ headers=headers, json=json_data)\n\n\n    return {\n        \"result\"\
+          : \"finished!\",\n    }\n"
+        code_language: python3
+        dependencies:
+        - name: requests
+          version: ''
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: "\u30B3\u30FC\u30C9 3"
+        type: code
+        variables:
+        - value_selector:
+          - '1718575220323'
+          - json_string
+          variable: json_string
+        - value_selector:
+          - '1718531598016'
+          - database_id_of_posts
+          variable: database_id_of_posts
+        - value_selector:
+          - '1718531598016'
+          - notion_api_key
+          variable: notion_api_key
+      height: 54
+      id: '1718575305872'
+      position:
+        x: 1704.9409685652356
+        y: 258
+      positionAbsolute:
+        x: 1704.9409685652356
+        y: 258
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 114.870738982896
+      y: 554.775180841849
+      zoom: 0.5000000185090264
