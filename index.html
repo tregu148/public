@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>改良版 インフレゲーム - 年ごとデータ集約版</title>
+    <title>🍎リンゴゲーム🍎</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <style>
         body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
@@ -11,10 +11,21 @@
         #game-log { border: 1px solid #ccc; padding: 10px; margin-top: 20px; height: 150px; overflow-y: scroll; }
         .chart-container { margin-top: 20px; height: 300px; }
         #current-year { font-size: 24px; font-weight: bold; color: #4a4a4a; margin-bottom: 10px; }
+        #alert { 
+            display: none; 
+            background-color: #ffcccc; 
+            border: 1px solid #ff0000; 
+            color: #ff0000; 
+            padding: 10px; 
+            margin-bottom: 10px; 
+            text-align: center; 
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <h1>改良版 インフレゲーム - 年ごとデータ集約版</h1>
+    <h1>改良版 インフレゲーム - 現金アラート付き</h1>
+    <div id="alert"></div>
     <div id="current-year"></div>
     <div id="game-status"></div>
     <div id="actions">
@@ -57,16 +68,18 @@
             updateGameStatus();
             updateCharts();
             log('ゲームを開始しました。目標：できるだけ多くの🍎を集めよう！');
+            hideAlert();
         }
 
         function updateGameStatus() {
             const bananaValue = bananas * bananaPrice;
             const totalValue = cash + bananaValue;
+            const bananaDisplay = '🍌'.repeat(bananas);
             const appleDisplay = '🍎'.repeat(apples);
             document.getElementById('current-year').innerText = `現在の年: ${currentYear}年目`;
             document.getElementById('game-status').innerHTML = `
                 <p>現金: ¥${cash.toFixed(0)}</p>
-                <p>🍌: ${bananas} 個 (1個 = ¥${bananaPrice.toFixed(0)}) 総額: ¥${bananaValue.toFixed(0)}</p>
+                <p>🍌: ${bananaDisplay}：${bananas}個 (1個 = ¥${bananaPrice.toFixed(0)}) 総額: ¥${bananaValue.toFixed(0)}</p>
                 <p>🍎: ${appleDisplay}：${apples}個 (1個 = ¥${applePrice.toFixed(0)})</p>
                 <p>総資産: ¥${totalValue.toFixed(0)}</p>
             `;
@@ -85,6 +98,26 @@
                 chartData.appleCountData[currentYear - 1] = apples;
                 chartData.bananaPriceData[currentYear - 1] = bananaPrice;
             }
+
+            checkCashAlert();
+        }
+
+        function checkCashAlert() {
+            if (cash === 0) {
+                showAlert('警告: 現金が0円になりました！');
+            } else {
+                hideAlert();
+            }
+        }
+
+        function showAlert(message) {
+            const alertElement = document.getElementById('alert');
+            alertElement.textContent = message;
+            alertElement.style.display = 'block';
+        }
+
+        function hideAlert() {
+            document.getElementById('alert').style.display = 'none';
         }
 
         function log(message) {
