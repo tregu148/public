@@ -1,0 +1,347 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: PDFなんJ解説
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.2
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: 693d8fcf-76f3-4052-9712-bde3b69e2d26
+    name: FOLDER_ID
+    value: ''
+    value_type: secret
+  - description: ''
+    id: c51c7521-fd2d-47e8-9ff2-8ee615196902
+    name: GAS_API_KEY
+    value: ''
+    value_type: secret
+  - description: ''
+    id: 5cf5a1ac-2464-4fb1-95f8-1418240da2f5
+    name: YOUR_DEPLOYED_URL
+    value: ''
+    value_type: secret
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: document-extractor
+      id: 1729580246970-source-1729580254882-target
+      source: '1729580246970'
+      sourceHandle: source
+      target: '1729580254882'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1729580254882-source-1729581634107-target
+      source: '1729580254882'
+      sourceHandle: source
+      target: '1729581634107'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1729581634107-source-17304285939670-target
+      source: '1729581634107'
+      sourceHandle: source
+      target: '17304285939670'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: 17304285939670-source-1730427015178-target
+      source: '17304285939670'
+      sourceHandle: source
+      target: '1730427015178'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: end
+      id: 1730427015178-source-1729580792227-target
+      source: '1730427015178'
+      sourceHandle: source
+      target: '1729580792227'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: pdf
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: pdf
+      height: 89
+      id: '1729580246970'
+      position:
+        x: 79
+        y: 282
+      positionAbsolute:
+        x: 79
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: false
+        selected: false
+        title: ドキュメントエクストラクター
+        type: document-extractor
+        variable_selector:
+        - '1729580246970'
+        - pdf
+      height: 93
+      id: '1729580254882'
+      position:
+        x: 407.17709200560023
+        y: 282
+      positionAbsolute:
+        x: 407.17709200560023
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1729581634107'
+          - text
+          variable: text
+        selected: false
+        title: 終了
+        type: end
+      height: 89
+      id: '1729580792227'
+      position:
+        x: 1759.2612787877101
+        y: 282
+      positionAbsolute:
+        x: 1759.2612787877101
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            frequency_penalty: 0.3
+            presence_penalty: 0.2
+            temperature: 0.5
+            top_p: 0.85
+          mode: chat
+          name: gpt-4o-mini
+          provider: openai
+        prompt_template:
+        - id: 74994eb4-777e-4bcf-b6a0-c2120f7af2ac
+          role: system
+          text: あなたはアカデミックなものも、面白ネタにできます
+        - id: e6684199-1627-40c4-ab8e-41915ac10b20
+          role: user
+          text: 'なんJスレ形式で　
+
+            ---
+
+            {{#1729580254882.text#}}'
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 97
+      id: '1729581634107'
+      position:
+        x: 736.390135741558
+        y: 282
+      positionAbsolute:
+        x: 736.390135741558
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(markdown_text: str, \n         title: str,\n         YOUR_DEPLOYED_URL:\
+          \ str,\n         GAS_API_KEY: str,\n         FOLDER_ID: str) -> dict:\n\
+          \    \n    import httpx\n    \n    url = YOUR_DEPLOYED_URL  # デプロイされたURLを設定\n\
+          \    \n    data = {\n        'markdownText': markdown_text,\n        'apiKey':\
+          \ GAS_API_KEY,  # GAS APIキーを設定\n        'title': title,\n        'folderId':\
+          \ FOLDER_ID  # 環境変数からフォルダIDを取得\n    }\n    \n    response = httpx.post(url,\n\
+          \                         json=data,\n                         timeout =\
+          \ 60)\n    \n    return {\n        \"result\": \"success\"\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: コード
+        type: code
+        variables:
+        - value_selector:
+          - '1729581634107'
+          - text
+          variable: markdown_text
+        - value_selector:
+          - '17304285939670'
+          - text
+          variable: title
+        - value_selector:
+          - env
+          - YOUR_DEPLOYED_URL
+          variable: YOUR_DEPLOYED_URL
+        - value_selector:
+          - env
+          - GAS_API_KEY
+          variable: GAS_API_KEY
+        - value_selector:
+          - env
+          - FOLDER_ID
+          variable: FOLDER_ID
+      height: 53
+      id: '1730427015178'
+      position:
+        x: 1421.076686810302
+        y: 282
+      positionAbsolute:
+        x: 1421.076686810302
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gemini-1.5-flash
+          provider: google
+        prompt_template:
+        - id: 2c7f2d21-a68e-47a2-a7a1-57000a716a06
+          role: system
+          text: no talk just output
+        - id: 226066f7-d91c-4f5a-a6e6-007309a65fbd
+          role: user
+          text: 'タイトルを一つつけて
+
+            no "#","##" は避けて、そのままはじめて
+
+            ---
+
+            {{#1729581634107.text#}}
+
+            ---'
+        selected: false
+        title: LLM 2 (1)
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 97
+      id: '17304285939670'
+      position:
+        x: 1088.0674285566877
+        y: 282
+      positionAbsolute:
+        x: 1088.0674285566877
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 65.20135595581132
+      y: 556.3322062930363
+      zoom: 0.25
