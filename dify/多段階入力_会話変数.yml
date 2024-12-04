@@ -1,0 +1,797 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 多段階入力_会話変数
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.4
+workflow:
+  conversation_variables:
+  - description: ''
+    id: 9cb5c870-8fdc-46a0-b1d6-797436d66b97
+    name: assistantname
+    selector:
+    - conversation
+    - assistantname
+    value: つくし
+    value_type: string
+  - description: ''
+    id: 71f7130f-3494-44f4-b1f2-cf7dc0b3ca7c
+    name: character
+    selector:
+    - conversation
+    - character
+    value: 温厚な性格
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 1
+    opening_statement: 'このアプリでは好みのキャラクターとお話しできます
+
+      開始ボタンを押してください'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - 開始
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: if-else
+      id: 1732945041089-source-1732945948900-target
+      selected: false
+      source: '1732945041089'
+      sourceHandle: source
+      target: '1732945948900'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1732945948900-false-1732948905310-target
+      selected: false
+      source: '1732945948900'
+      sourceHandle: 'false'
+      target: '1732948905310'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 17329506960160-source-1732950712945-target
+      selected: false
+      source: '17329506960160'
+      sourceHandle: source
+      target: '1732950712945'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: template-transform
+      id: 1732945948900-true-1732950944053-target
+      selected: false
+      source: '1732945948900'
+      sourceHandle: 'true'
+      target: '1732950944053'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: llm
+      id: 1732950944053-source-17329506960160-target
+      selected: false
+      source: '1732950944053'
+      sourceHandle: source
+      target: '17329506960160'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1732952166114-source-1732952299706-target
+      selected: false
+      source: '1732952166114'
+      sourceHandle: source
+      target: '1732952299706'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1732948905310-source-1732946079594-target
+      selected: false
+      source: '1732948905310'
+      sourceHandle: source
+      target: '1732946079594'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: answer
+        targetType: llm
+      id: 1733286749750-source-1732952166114-target
+      selected: false
+      source: '1733286749750'
+      sourceHandle: source
+      target: '1732952166114'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: answer
+        targetType: answer
+      id: 1733286857851-source-1732952447551-target
+      selected: false
+      source: '1733286857851'
+      sourceHandle: source
+      target: '1732952447551'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1732945948900-e5fe8a1d-f5f6-4a42-b381-21df800e16fd-1733291492661-target
+      source: '1732945948900'
+      sourceHandle: e5fe8a1d-f5f6-4a42-b381-21df800e16fd
+      target: '1733291492661'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: assigner
+        targetType: answer
+      id: 1733291492661-source-1733286749750-target
+      source: '1733291492661'
+      sourceHandle: source
+      target: '1733286749750'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1732945948900-fa4389b9-5a6b-4d85-9c60-7fcbe3a18b29-1733291676261-target
+      source: '1732945948900'
+      sourceHandle: fa4389b9-5a6b-4d85-9c60-7fcbe3a18b29
+      target: '1733291676261'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: assigner
+        targetType: answer
+      id: 1733291676261-source-1733286857851-target
+      source: '1733291676261'
+      sourceHandle: source
+      target: '1733286857851'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - label: character
+          max_length: 128
+          options: []
+          required: false
+          type: text-input
+          variable: character
+        - label: username
+          max_length: 128
+          options: []
+          required: false
+          type: text-input
+          variable: username
+      height: 114
+      id: '1732945041089'
+      position:
+        x: -319.79681106470787
+        y: 307.5605309994562
+      positionAbsolute:
+        x: -319.79681106470787
+        y: 307.5605309994562
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: '='
+            id: e727f7c7-7f32-45e7-bfba-c7598fcea654
+            value: '0'
+            varType: number
+            variable_selector:
+            - sys
+            - dialogue_count
+          id: 'true'
+          logical_operator: and
+        - case_id: e5fe8a1d-f5f6-4a42-b381-21df800e16fd
+          conditions:
+          - comparison_operator: '='
+            id: a5883a0a-0bb7-4b4b-b2ca-2291c6a8709d
+            value: '1'
+            varType: number
+            variable_selector:
+            - sys
+            - dialogue_count
+          id: e5fe8a1d-f5f6-4a42-b381-21df800e16fd
+          logical_operator: and
+        - case_id: fa4389b9-5a6b-4d85-9c60-7fcbe3a18b29
+          conditions:
+          - comparison_operator: '='
+            id: ec200cdc-a085-4d67-9467-951806db74a0
+            value: '2'
+            varType: number
+            variable_selector:
+            - sys
+            - dialogue_count
+          id: fa4389b9-5a6b-4d85-9c60-7fcbe3a18b29
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 220
+      id: '1732945948900'
+      position:
+        x: -39.31256306905797
+        y: 307.5605309994562
+      positionAbsolute:
+        x: -39.31256306905797
+        y: 307.5605309994562
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '{{#1732948905310.text#}}'
+        desc: ''
+        selected: false
+        title: 回答 2
+        type: answer
+        variables: []
+      height: 101
+      id: '1732946079594'
+      position:
+        x: 946.3838673259258
+        y: 1039.9339439196756
+      positionAbsolute:
+        x: 946.3838673259258
+        y: 1039.9339439196756
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-1.5-flash
+          provider: google
+        prompt_template:
+        - id: 7393bda9-ff87-48d2-833c-4b9252067043
+          role: system
+          text: 'あなたはロールプレイする役割を持ちます。
+
+            name:{{#conversation.assistantname#}}
+
+            主たる人格・性格:{{#conversation.character#}}
+
+            user name:{{#1732945041089.username#}}
+
+            '
+        selected: false
+        title: LLM おしゃべり
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 96
+      id: '1732948905310'
+      position:
+        x: 638
+        y: 1039.9339439196756
+      positionAbsolute:
+        x: 638
+        y: 1039.9339439196756
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-1.5-flash-latest
+          provider: google
+        prompt_template:
+        - id: 007a9a9f-bbf5-406f-97d6-b7d8f3bf4cb9
+          role: system
+          text: '{{#1732945041089.character#}} の具体的性格・人格をレコメンドします。
+
+            一覧と選ぶためのボタンを添えます
+
+            all button are secondary.
+
+            no code block
+
+
+            模範例:
+
+            ---
+
+            <button data-message="性格: {{#1732950944053.output#}}" data-variant="secondary">1.穏やかで優しい癒し系の女の子</button>
+
+            詳細: {{#1732950944053.output#}}
+
+            ---
+
+            '
+        - id: db25011f-5382-440f-96b8-127800723066
+          role: user
+          text: ''
+        selected: false
+        title: LLM 性格
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 96
+      id: '17329506960160'
+      position:
+        x: 1595.9393592088888
+        y: 444.28571428571433
+      positionAbsolute:
+        x: 1595.9393592088888
+        y: 444.28571428571433
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '性格はどうしますか？
+
+          ---
+
+          {{#17329506960160.text#}}
+
+          '
+        desc: ''
+        selected: false
+        title: 回答 4
+        type: answer
+        variables: []
+      height: 117
+      id: '1732950712945'
+      position:
+        x: 1893.082216351746
+        y: 444.28571428571433
+      positionAbsolute:
+        x: 1893.082216351746
+        y: 444.28571428571433
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        selected: false
+        template: "カフェは彼女にとって「自分を見つめ直す特別な場所」\r\n写真を撮るのが好きだが、SNSのための投稿ではなく思い出として残したい派\r\
+          \n勉強も趣味も「丁寧に過ごすこと」を大切にする性格\r\n将来の夢は、心理カウンセラー。人の心に寄り添える仕事がしたいと考えている"
+        title: テンプレート 3
+        type: template-transform
+        variables: []
+      height: 52
+      id: '1732950944053'
+      position:
+        x: 1272.498283697284
+        y: 444.28571428571433
+      positionAbsolute:
+        x: 1272.498283697284
+        y: 444.28571428571433
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-1.5-flash-latest
+          provider: google
+        prompt_template:
+        - id: 6a157133-0d05-4489-b4bd-1c578ec5f613
+          role: system
+          text: '華やかさと洗練された印象を意識した名前を３つ考えて
+
+            no code block, no talk, just button
+
+            主たる人格・性格：{{#1732945041089.character#}}
+
+            {{#conversation.character#}}
+
+
+            模範例:
+
+            <button data-message="名前: みこと" data-variant="primary">みこと</button>
+
+
+            no code block, no talk, just button'
+        - id: 898ad592-dea1-4c9c-b43e-ed5f4ee0cd84
+          role: user
+          text: ''
+        selected: false
+        title: LLM 名前
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 96
+      id: '1732952166114'
+      position:
+        x: 1602.1631070335254
+        y: 589.1011950128943
+      positionAbsolute:
+        x: 1602.1631070335254
+        y: 589.1011950128943
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '名前はどうしますか？
+
+          ---
+
+          {{#1732952166114.text#}}'
+        desc: ''
+        selected: false
+        title: 回答 3
+        type: answer
+        variables: []
+      height: 117
+      id: '1732952299706'
+      position:
+        x: 1899.3059641763825
+        y: 589.1011950128943
+      positionAbsolute:
+        x: 1899.3059641763825
+        y: 589.1011950128943
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '会話を開始しますか？
+
+
+          <button data-message="おしゃべり開始" data-variant="primary">開始</button>
+
+          '
+        desc: ''
+        selected: false
+        title: 回答 4
+        type: answer
+        variables: []
+      height: 130
+      id: '1732952447551'
+      position:
+        x: 1893.082216351746
+        y: 719.0196414961317
+      positionAbsolute:
+        x: 1893.082216351746
+        y: 719.0196414961317
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '以下に設定しました。
+
+
+          {{#conversation.character#}}
+
+          ---
+
+          '
+        desc: ''
+        selected: false
+        title: 回答 5
+        type: answer
+        variables: []
+      height: 101
+      id: '1733286749750'
+      position:
+        x: 938
+        y: 567.5
+      positionAbsolute:
+        x: 938
+        y: 567.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '以下に設定しました。
+
+          {{#conversation.assistantname#}}
+
+          ---
+
+          '
+        desc: ''
+        selected: false
+        title: 回答 6
+        type: answer
+        variables: []
+      height: 101
+      id: '1733286857851'
+      position:
+        x: 946.3838673259258
+        y: 712.5392829922633
+      positionAbsolute:
+        x: 946.3838673259258
+        y: 712.5392829922633
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        author: tregu0458
+        desc: ''
+        height: 188
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"チャットボットからユーザーに聞いてきます","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"ポイント","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"-
+          回答ブロックでフローをとめる","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"-
+          IF/ELSEで分岐させる。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 249
+      height: 188
+      id: '1733289882922'
+      position:
+        x: 1887.4982987542305
+        y: 235.0389168433054
+      positionAbsolute:
+        x: 1887.4982987542305
+        y: 235.0389168433054
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 249
+    - data:
+        author: tregu0458
+        desc: ''
+        height: 101
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"前のチャットボットからの回答を受け取り、会話変数にいれます。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: green
+        title: ''
+        type: ''
+        width: 526
+      height: 101
+      id: '1733289996864'
+      position:
+        x: 641.220877537018
+        y: 454.10026559041285
+      positionAbsolute:
+        x: 641.220877537018
+        y: 454.10026559041285
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 526
+    - data:
+        author: tregu0458
+        desc: ''
+        height: 103
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"このLLMはメモリをオンにしています(対話用のチャットフローなので)。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 103
+      id: '1733290115944'
+      position:
+        x: 641.220877537018
+        y: 1244.6034019692
+      positionAbsolute:
+        x: 641.220877537018
+        y: 1244.6034019692
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - sys
+          - query
+          variable_selector:
+          - conversation
+          - character
+          write_mode: over-write
+        selected: false
+        title: 変数代入
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1733291492661'
+      position:
+        x: 638
+        y: 567.5
+      positionAbsolute:
+        x: 638
+        y: 567.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - sys
+          - query
+          variable_selector:
+          - conversation
+          - assistantname
+          write_mode: over-write
+        selected: false
+        title: 変数代入 2
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1733291676261'
+      position:
+        x: 638
+        y: 712.5392829922633
+      positionAbsolute:
+        x: 638
+        y: 712.5392829922633
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        author: tregu0458
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"対話変数があるので、それをプロンプトに差し込んでいます。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 88
+      id: '1733292861800'
+      position:
+        x: 638.3294519902677
+        y: 1153.4819031901247
+      positionAbsolute:
+        x: 638.3294519902677
+        y: 1153.4819031901247
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    viewport:
+      x: 719.8927501515177
+      y: 284.26485266221687
+      zoom: 0.629960514665288
