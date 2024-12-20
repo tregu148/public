@@ -1,0 +1,350 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: GoogleDocs
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.4
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: 93f0f6d4-d65b-414f-820c-7a73eb3ad2e7
+    name: gas_url
+    selector:
+    - env
+    - gas_url
+    value: ''
+    value_type: secret
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: end
+      id: 1734660777290-source-1734660782052-target
+      source: '1734660777290'
+      sourceHandle: source
+      target: '1734660782052'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: http-request
+      id: 1734660770263-source-1734660777290-target
+      source: '1734660770263'
+      sourceHandle: source
+      target: '1734660777290'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1734660765225-source-17346738306020-target
+      source: '1734660765225'
+      sourceHandle: source
+      target: '17346738306020'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: template-transform
+      id: 1734675317913-source-1734660770263-target
+      source: '1734675317913'
+      sourceHandle: source
+      target: '1734660770263'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: parameter-extractor
+      id: 17346738306020-source-1734675942534-target
+      source: '17346738306020'
+      sourceHandle: source
+      target: '1734675942534'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: code
+      id: 1734675942534-source-1734675317913-target
+      source: '1734675942534'
+      sourceHandle: source
+      target: '1734675317913'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 53
+      id: '1734660765225'
+      position:
+        x: 30
+        y: 248.5
+      positionAbsolute:
+        x: 30
+        y: 248.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: true
+        template: "{\r\n    \"title\": \"{{title}}\",\r\n    \"content\": \"{{text}}\"\
+          ,\r\n    \"author\": \"Dify\"\r\n}"
+        title: テンプレート
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1734675317913'
+          - result
+          variable: text
+        - value_selector:
+          - '1734675942534'
+          - title
+          variable: title
+      height: 53
+      id: '1734660770263'
+      position:
+        x: 1242
+        y: 248.5
+      positionAbsolute:
+        x: 1242
+        y: 248.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-4
+            key: ''
+            type: text
+            value: '{{#1734660770263.output#}}'
+          type: json
+        desc: ''
+        headers: ''
+        method: post
+        params: ''
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTPリクエスト
+        type: http-request
+        url: '{{#env.gas_url#}}'
+        variables: []
+      height: 96
+      id: '1734660777290'
+      position:
+        x: 1544.3590023500042
+        y: 248.5
+      positionAbsolute:
+        x: 1544.3590023500042
+        y: 248.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1734660777290'
+          - body
+          variable: body
+        selected: false
+        title: 終了
+        type: end
+      height: 89
+      id: '1734660782052'
+      position:
+        x: 1851.4285714285713
+        y: 248.5
+      positionAbsolute:
+        x: 1851.4285714285713
+        y: 248.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-1.5-flash-latest
+          provider: google
+        prompt_template:
+        - id: 62b08fbd-60e0-4b43-be1a-4305e44ff9ed
+          role: system
+          text: ''
+        - id: 7fb08cba-a236-4da2-83e4-ebfc4e272f1d
+          role: user
+          text: ダミーの技術記事を書いて
+        selected: false
+        title: LLM (1)
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 97
+      id: '17346738306020'
+      position:
+        x: 334
+        y: 248.5
+      positionAbsolute:
+        x: 334
+        y: 248.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(text: str) -> dict:\n    \"\"\"\n    文字列から二重引用符(\")とJinja2のテンプレート記号({{}})を取り除く関数\n\
+          \    \n    Args:\n        text (str): 処理する文字列\n    \n    Returns:\n    \
+          \    dict: 処理結果を含む辞書\n    \"\"\"\n    # \"を取り除く\n    text = text.replace('\"\
+          ', '')\n    \n    # {{と}}を取り除く\n    text = text.replace('{{', '').replace('}}',\
+          \ '')\n    \n    return {\n        \"result\": text\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: コード
+        type: code
+        variables:
+        - value_selector:
+          - '17346738306020'
+          - text
+          variable: text
+      height: 53
+      id: '1734675317913'
+      position:
+        x: 938
+        y: 248.5
+      positionAbsolute:
+        x: 938
+        y: 248.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-1.5-flash-latest
+          provider: google
+        parameters:
+        - description: この技術記事のタイトル
+          name: title
+          required: false
+          type: string
+        query:
+        - '17346738306020'
+        - text
+        reasoning_mode: prompt
+        selected: false
+        title: パラメーター抽出
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 97
+      id: '1734675942534'
+      position:
+        x: 638
+        y: 248.5
+      positionAbsolute:
+        x: 638
+        y: 248.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 284.42145186273444
+      y: 374.950079467965
+      zoom: 0.6093853943072868
