@@ -65,17 +65,6 @@ workflow:
     edges:
     - data:
         isInIteration: false
-        sourceType: http-request
-        targetType: end
-      id: 1734660777290-source-1734660782052-target
-      source: '1734660777290'
-      sourceHandle: source
-      target: '1734660782052'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
         sourceType: template-transform
         targetType: http-request
       id: 1734660770263-source-1734660777290-target
@@ -129,6 +118,28 @@ workflow:
       targetHandle: target
       type: custom
       zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: tool
+      id: 1734660777290-source-1735091508526-target
+      source: '1734660777290'
+      sourceHandle: source
+      target: '1735091508526'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: end
+      id: 1735091508526-source-1734660782052-target
+      source: '1735091508526'
+      sourceHandle: source
+      target: '1734660782052'
+      targetHandle: target
+      type: custom
+      zIndex: 0
     nodes:
     - data:
         desc: ''
@@ -151,7 +162,7 @@ workflow:
       width: 244
     - data:
         desc: ''
-        selected: true
+        selected: false
         template: "{\r\n    \"title\": \"{{title}}\",\r\n    \"content\": \"{{text}}\"\
           ,\r\n    \"author\": \"Dify\"\r\n}"
         title: テンプレート
@@ -168,12 +179,12 @@ workflow:
       height: 53
       id: '1734660770263'
       position:
-        x: 1242
+        x: 1246
         y: 248.5
       positionAbsolute:
-        x: 1242
+        x: 1246
         y: 248.5
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -205,10 +216,10 @@ workflow:
       height: 96
       id: '1734660777290'
       position:
-        x: 1544.3590023500042
+        x: 1550
         y: 248.5
       positionAbsolute:
-        x: 1544.3590023500042
+        x: 1550
         y: 248.5
       selected: false
       sourcePosition: right
@@ -219,21 +230,21 @@ workflow:
         desc: ''
         outputs:
         - value_selector:
-          - '1734660777290'
-          - body
-          variable: body
+          - '1735091508526'
+          - text
+          variable: documentUrl
         selected: false
         title: 終了
         type: end
       height: 89
       id: '1734660782052'
       position:
-        x: 1851.4285714285713
+        x: 2158
         y: 248.5
       positionAbsolute:
-        x: 1851.4285714285713
+        x: 2158
         y: 248.5
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -278,7 +289,7 @@ workflow:
     - data:
         code: "def main(text: str) -> dict:\n    \"\"\"\n    文字列から二重引用符(\")とJinja2のテンプレート記号({{}})を取り除く関数\n\
           \    \n    Args:\n        text (str): 処理する文字列\n    \n    Returns:\n    \
-          \    dict: 処理結果を含む辞書\n    \"\"\"\n    # \"を取り除く\n    text = text.replace('\"\
+          \    dict: 処理結果を含む辞書\n    \"\"\"\n\n    # \"を取り除く\n    text = text.replace('\"\
           ', '')\n    \n    # {{と}}を取り除く\n    text = text.replace('{{', '').replace('}}',\
           \ '')\n    \n    return {\n        \"result\": text\n    }"
         code_language: python3
@@ -298,10 +309,10 @@ workflow:
       height: 53
       id: '1734675317913'
       position:
-        x: 938
+        x: 942
         y: 248.5
       positionAbsolute:
-        x: 938
+        x: 942
         y: 248.5
       selected: false
       sourcePosition: right
@@ -344,7 +355,39 @@ workflow:
       targetPosition: left
       type: custom
       width: 244
+    - data:
+        desc: ''
+        provider_id: json_process
+        provider_name: json_process
+        provider_type: builtin
+        selected: false
+        title: JSON Parse
+        tool_configurations:
+          ensure_ascii: 1
+        tool_label: JSON Parse
+        tool_name: parse
+        tool_parameters:
+          content:
+            type: mixed
+            value: '{{#1734660777290.body#}}'
+          json_filter:
+            type: mixed
+            value: documentUrl
+        type: tool
+      height: 89
+      id: '1735091508526'
+      position:
+        x: 1854
+        y: 248.5
+      positionAbsolute:
+        x: 1854
+        y: 248.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
     viewport:
-      x: 284.42145186273444
-      y: 374.950079467965
-      zoom: 0.6093853943072868
+      x: 83.72855699992789
+      y: 449.0407564804424
+      zoom: 0.2652503991393196
